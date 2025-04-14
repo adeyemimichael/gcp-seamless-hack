@@ -1,0 +1,7 @@
+streamlit
+pyngrok
+gspread
+pandas
+matplotlib
+seaborn
+gspread_dataframe

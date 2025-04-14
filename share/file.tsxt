@@ -1,0 +1,299 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import gspread
+from google.oauth2.service_account import Credentials
+from gspread_dataframe import set_with_dataframe
+from google.auth.transport.requests import Request
+
+# Set Streamlit's custom theme (dark or light mode)
+st.set_page_config(page_title="PYUSD Ethereum Transfers Dashboard", page_icon="📊", layout="wide")
+
+# Customizing CSS
+st.markdown("""
+    <style>
+    .css-1d391kg {
+        background-color: #0e1117;  /* Dark background */
+        color: #ffffff;  /* White text */
+    }
+    .css-1v3fvcr {
+        background-color: #131f36;  /* Light Dark header */
+        color: #ffffff;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    .css-2k3otw {
+        background-color: #4c8bf5;  /* Streamlit button color */
+        color: white;
+    }
+    .streamlit-expanderHeader {
+        color: #76b900; /* Highlighted color for expanders */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Define the required scope for accessing Google Sheets
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file"]
+
+# Google Sheets Authentication
+def authenticate_google_sheets():
+    try:
+        creds = Credentials.from_service_account_file(
+            'credentials/dataset-hackathon.json', scopes=SCOPES
+        )
+        # If the credentials are expired, refresh them
+        if creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        
+        client = gspread.authorize(creds)
+        return client
+    except Exception as e:
+        st.error(f"Authentication failed: {e}")
+        return None
+
+client = authenticate_google_sheets()
+
+# Stop if authentication fails
+if not client:
+    st.stop()
+
+# Load the data from Google Sheets (or use a placeholder if not set up)
+sheet = client.open('PYUSD Transaction Log')  # Name of your Google Sheet
+worksheet = sheet.get_worksheet(0)  # Select the first sheet
+
+# Load data into pandas DataFrame
+pyusd_df = pd.DataFrame(worksheet.get_all_records())
+
+# Ensure the 'block_date' column is in datetime format
+pyusd_df['block_date'] = pd.to_datetime(pyusd_df['block_date'])
+
+# Group by day and sum the 'pyusd_amount'
+daily_volume = pyusd_df.groupby('block_date')['pyusd_amount'].sum().reset_index()
+
+# Streamlit UI with headings and styling
+st.title("📊 PYUSD Ethereum Transfers Dashboard", anchor="top")
+st.markdown("This dashboard visualizes the Ethereum transactions related to PYUSD, including daily volume and distribution over time.")
+
+# Display the data in an interactive table
+st.subheader("📅 Daily Volume Overview")
+st.dataframe(daily_volume)
+
+# Display Line Chart for Daily Volume
+st.subheader("📈 Daily Volume Trend")
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.plot(daily_volume['block_date'], daily_volume['pyusd_amount'], marker='o', color='#76b900')
+ax.set_title("Daily PYUSD Transfer Volume", fontsize=14)
+ax.set_xlabel("Date", fontsize=12)
+ax.set_ylabel("PYUSD Amount", fontsize=12)
+ax.grid(True, linestyle="--", alpha=0.6)
+st.pyplot(fig)
+
+# Optional: Add more charts or visualizations
+st.subheader("📊 PYUSD Volume Distribution")
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.barplot(data=daily_volume, x='block_date', y='pyusd_amount', ax=ax, color='#4c8bf5')
+ax.set_title("PYUSD Volume Distribution by Date", fontsize=14)
+ax.set_xlabel("Date", fontsize=12)
+ax.set_ylabel("PYUSD Amount", fontsize=12)
+ax.tick_params(axis='x', rotation=45)
+st.pyplot(fig)
+
+# Adding Interactive Feature: Filter data by date range
+st.sidebar.header("🛠️ Filter Options")
+start_date = st.sidebar.date_input("Start Date", daily_volume['block_date'].min())
+end_date = st.sidebar.date_input("End Date", daily_volume['block_date'].max())
+
+# Filter data based on date selection
+filtered_data = daily_volume[(daily_volume['block_date'] >= pd.to_datetime(start_date)) & 
+                             (daily_volume['block_date'] <= pd.to_datetime(end_date))]
+
+# Display filtered data
+st.subheader(f"📊 Filtered Data from {start_date} to {end_date}")
+st.dataframe(filtered_data)
+
+# Optional: Add interactive plot for filtered data
+if not filtered_data.empty:
+    st.subheader("📈 Filtered Daily Volume Trend")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(filtered_data['block_date'], filtered_data['pyusd_amount'], marker='o', color='#ff6347')
+    ax.set_title("Filtered Daily PYUSD Transfer Volume", fontsize=14)
+    ax.set_xlabel("Date", fontsize=12)
+    ax.set_ylabel("PYUSD Amount", fontsize=12)
+    ax.grid(True, linestyle="--", alpha=0.6)
+    st.pyplot(fig)
+
+# Optionally export the data to Google Sheets
+if st.button("🔄 Update Google Sheet"):
+    set_with_dataframe(worksheet, pyusd_df)
+    st.success("✅ Data updated successfully in Google Sheets!")
+
+
+
+
+
+
+
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import gspread
+from google.oauth2.service_account import Credentials
+from gspread_dataframe import set_with_dataframe
+from google.auth.transport.requests import Request
+
+# Define the required scope for accessing Google Sheets
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file"]
+
+# Google Sheets Authentication
+def authenticate_google_sheets():
+    try:
+        creds = Credentials.from_service_account_file(
+            'credentials/dataset-hackathon.json', scopes=SCOPES
+        )
+        if creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        
+        client = gspread.authorize(creds)
+        return client
+    except Exception as e:
+        st.error(f"Authentication failed: {e}")
+        return None
+
+client = authenticate_google_sheets()
+if not client:
+    st.stop()
+
+# Load Google Sheet
+sheet = client.open('PYUSD Transaction Log')
+worksheet = sheet.get_worksheet(0)
+pyusd_df = pd.DataFrame(worksheet.get_all_records())
+
+# Parse date
+pyusd_df['block_date'] = pd.to_datetime(pyusd_df['block_date'])
+
+# Daily Aggregation
+daily_volume = pyusd_df.groupby('block_date')['pyusd_amount'].sum().reset_index()
+
+# Add Wallet Labels
+wallet_labels = {
+    '0x264bd8291fae1d75db2c5f573b07faa6715997b5': 'Paxos 4 (Hildobby)',
+    '0x2893b326816ed864c4bccddeaa4a006c8367c229': 'Paxos Treasury (Hildobby)',
+}
+pyusd_df['from_label'] = pyusd_df['from_address'].map(wallet_labels).fillna('Unknown')
+
+# Etherscan links
+pyusd_df['from_address_link'] = pyusd_df['from_address'].apply(
+    lambda x: f"[{x}](https://etherscan.io/address/{x})")
+pyusd_df['etherscan_link'] = pyusd_df['from_address'].apply(
+    lambda x: f"[View on Etherscan](https://etherscan.io/address/{x})")
+
+display_columns = ['from_address_link', 'from_label', 'pyusd_amount', 'block_date']
+
+# Wallet Summary
+wallet_summary = pyusd_df.groupby('from_address').agg(
+    total_transactions=('pyusd_amount', 'count'),
+    total_value=('pyusd_amount', 'sum')
+).reset_index()
+
+# Sidebar Filters
+st.sidebar.header("🛠️ Filter Options")
+start_date = st.sidebar.date_input("Start Date", pyusd_df['block_date'].min())
+end_date = st.sidebar.date_input("End Date", pyusd_df['block_date'].max())
+wallet_filter = st.sidebar.text_input("Filter by Wallet Address")
+
+# Filtered Data
+filtered_daily_volume = daily_volume[
+    (daily_volume['block_date'] >= pd.to_datetime(start_date)) & 
+    (daily_volume['block_date'] <= pd.to_datetime(end_date))
+]
+filtered_wallet_df = pyusd_df[pyusd_df['from_address'].str.contains(wallet_filter, na=False)]
+
+# Custom CSS
+st.markdown("""
+    <style>
+    .navbar {
+        background-color: #2D2D2D;
+        padding: 10px 30px;
+        color: white;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .navbar button {
+        background-color: transparent;
+        border: none;
+        color: white;
+        margin-right: 20px;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    .navbar button.selected {
+        color: #1F77E5;
+        text-decoration: underline;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# --- Navbar ---
+def render_navbar(selected):
+    col1, col2, col3, col4, col5 = st.columns([2, 2, 2, 2, 2])
+    with col1:
+        if st.button("Home", key="home", use_container_width=True):
+            st.session_state.page = "home"
+    with col2:
+        if st.button("Transactions", key="transactions", use_container_width=True):
+            st.session_state.page = "transactions"
+    with col3:
+        if st.button("Analytics", key="analytics", use_container_width=True):
+            st.session_state.page = "analytics"
+    with col4:
+        if st.button("Wallet Tags", key="tags", use_container_width=True):
+            st.session_state.page = "tags"
+    with col5:
+        st.markdown(f'<a href="https://etherscan.io" target="_blank"><button style="color:white;background:none;border:none;">Etherscan</button></a>', unsafe_allow_html=True)
+
+# Init session state
+if "page" not in st.session_state:
+    st.session_state.page = "home"
+
+render_navbar(st.session_state.page)
+
+# --- Page Content ---
+if st.session_state.page == "home":
+    st.title("📊 PYUSD Ethereum Transfers Dashboard")
+    st.subheader("Daily Volume (All Time)")
+    st.line_chart(daily_volume.set_index('block_date'))
+
+elif st.session_state.page == "transactions":
+    st.subheader("🔎 Detailed Wallet Transfers")
+    st.markdown("Wallet addresses with known labels and Etherscan links:")
+    st.dataframe(pyusd_df[display_columns])
+
+elif st.session_state.page == "analytics":
+    st.subheader(f"📊 Filtered Volume from {start_date} to {end_date}")
+    st.dataframe(filtered_daily_volume)
+
+    st.subheader("📈 Volume Distribution")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    sns.barplot(data=daily_volume, x='block_date', y='pyusd_amount', ax=ax)
+    ax.set_title("PYUSD Volume Distribution")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("PYUSD Amount")
+    st.pyplot(fig)
+
+    if wallet_filter:
+        st.subheader(f"📬 Filtered by Wallet Address: {wallet_filter}")
+        st.dataframe(filtered_wallet_df)
+
+elif st.session_state.page == "tags":
+    st.subheader("🏷 Wallet Summary")
+    st.dataframe(wallet_summary)
+
+# Update Sheet Button
+if st.button("Update Google Sheet"):
+    set_with_dataframe(worksheet, pyusd_df)
+    st.success("✅ Data updated successfully in Google Sheets!")
