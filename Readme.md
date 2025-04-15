@@ -185,5 +185,6 @@ This project is open-source under the [MIT License](LICENSE).
 
 - PayPal USD (PYUSD)  
 - Streamlit Community  
-- Etherscan / Data Sources  
+- Etherscan / Data Sources
+- Google Cloud Platform 
 
