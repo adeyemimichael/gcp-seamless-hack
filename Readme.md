@@ -43,8 +43,8 @@ The dashboard provides insights into the PYUSD token ecosystem, including:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/pyusd-dashboard.git
-   cd pyusd-dashboard
+   git clone https://github.com/adeyemimichael/gcp-seamless-hack.git
+   cd gcp-seamless-hack
    ```
 
 2. **Create and activate virtual environment (optional but recommended):**
