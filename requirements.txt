@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 streamlit
 pyngrok
 gspread
@@ -5,4 +6,13 @@ pandas
 matplotlib
 seaborn
 gspread_dataframe
+=======
+streamlit
+pyngrok
+gspread
+pandas
+matplotlib
+seaborn
+gspread_dataframe
+>>>>>>> 9309307a645bc4bb9d1a9278eb971d016df98239
  

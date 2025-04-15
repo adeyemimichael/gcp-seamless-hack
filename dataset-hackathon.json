@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "dataset-hackathon",
+  "private_key_id": "867d868ef27c04fca4602a860b410387901bf576",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDKn5TUP7tOmt+b\nCEhLYJJqHIp9dKhm3RiAaL2Xrg3kRsKo3yk3QpIOxHXV2qxQMrIZ1vyY6pPQNo2Y\nHayjEdGWPpyExG3TgahoVOdhZAIp4r/3BQA+Gmv+wwsuctvl59ap/MnKMQFUumL9\nFIV8XezRmkvHJz8l5rCUk74buoLP03ieUe5BHIFunK2lMv8/DmRCDADK+J61vaev\nmYi1vK1SsH+nby8hayJErP9STHkGNa1Wvw07TXRHAaTp93DCvCc7lcTzwxCWzM0l\nJW6t4wpDQSDde/id+5i0hD3+XU2aW4idkPJwOINqZb6Sxm7tTY5JPV0t4W94eG/2\nRdB3PAgZAgMBAAECggEALf6IfZ+T6JVuUZZRNs8OnUiqRS0gdu0UPT3JX69yVtGb\nKVMy22jgl7qP1wIC4FeJpyTuhNWmxPpFLPT7da67SSQgSmD+XycM79XqCej2NsTS\nd4OqmO5NenCSzrHi6a61QzPvKFb0auO+SZ2JaYA2nCOutN/bTUKu7aMV4dx2Ci+a\nZGmIOeYgjyvFGdIizaIv3MczXXCCNpo51SwRN359pDg3C593jdsRoDl6Hx96Yty2\nSoTR/HGsymA1C3A9XGBV1c9DmJNV4/iQpTdwoYfHSOhu3x3jpLmGEewlGEJmbsi1\nh7CUbWEHAVVwjA1Z1lITMYnnMj6mf+KSWQPRMlT2KQKBgQD4gNjxkFMH9ACrWAvr\nlclL4MIgnTNcJGJ2L62/4uY33Dqj91nOmdZ03e/TAG3yjxP6GGyMYttIEap7upCP\nmg1azr6mt8oH6HTSd9hpfS1KG1Tocjlzh6RH/ZZrnLf6KCDmgd4fxciLDsV6UhbH\n5N0Ylv0efx8JAqvVdUC/qdsNPQKBgQDQvGkD7Yj2DbwxSYa1xsPi7EMaDE1viANc\n8aTlhquFjIYh+DHjZL+7otz328INy2hoGWZclTxrGp/ifaJ+IaiOjwOuRVo+lLZs\n260HPRNiaQbapluAfZ015XK0UfF6a4G5YCj5MitEjxJD7zk8MSWsCc4s3pWCD83b\nEXa9h0uMDQKBgQC0d44VUAScn/zkclqlye+X5S/V05P69Il03wdFdRhPtOX5MabM\nvTfbQ1npWESAhJuzYo1iHmC1I+81T7WwM+ZC7iXSmWJk/9HnDxXg9gEv8k1lSZ6j\nYfxSM71LhVKunvnVrLaNSGttYVrUjEzy+if+tZg4z4TQXFpB+Jb/GfF02QKBgF6B\nb2p/2UrN3S7Tg1I5s+bB4X+hok2k3yDtpyLkXjQQ84ndvXie3NAvZKwzqyBjv9mh\n5l50ku5LF6iMCU3iH1asGZaFf95lplKTAzwLwwMDWj8UoskCFnOYdt59Wz95/TnY\n97QbqstXm4V2ggtmlQ/XQKm//SDt1t4gggo9f07hAoGAEt3MaBIcN1pQdGvEpiai\nNOAeiPWjnto8wps8mhMKybTgp7puGme+hSR77cCpIG8elbi2WNdyJfzJtyIqw6Dy\nQmnlupObZH7Hn7FGVoQ+7kV1YlxuDDoMqkHdiaOItOPIIKhBxbqQu7GtD5O5E5OZ\n6AKekELwPTKsHp7/q5i62oA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dataset-hackathon@dataset-hackathon.iam.gserviceaccount.com",
+  "client_id": "101627973828031521971",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dataset-hackathon%40dataset-hackathon.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
