@@ -1,5 +1,5 @@
 
-# 💰 PYUSD Ethereum Transfers Dashboard
+# 💰 📄 PyUSD Transaction Analytics
 
 This is a **streamlit-powered dashboard** that visualizes real-time and historical on-chain transactions of **PayPal USD (PYUSD)** on the Ethereum network. It allows users to track volume, view transaction trends, analyze top wallets, and more!
 
@@ -38,6 +38,47 @@ The dashboard provides insights into the PYUSD token ecosystem, including:
 - Seaborn
 
 ---
+## 🧩 Problem Statement
+
+In today’s fast-paced digital economy, stablecoins like **PayPal USD (PYUSD)** are increasingly used in decentralized finance (DeFi), e-commerce, and peer-to-peer transactions. However, there’s a **lack of transparency and accessibility** when it comes to understanding how PYUSD is being used on-chain. Most users and analysts face challenges such as:
+
+- 🚫 Difficulty in tracking transactions in real time.  
+- 📉 No easy way to analyze user behavior or volume trends.  
+- 💹 Inability to gain insights into wallets with high activity, usage patterns, or potential risks.  
+- 🔍 No simple dashboard or tool for DeFi researchers to monitor or interpret PYUSD activity.
+
+---
+
+## ✅ What the Project Solves
+
+This **PyUSD Transaction Analytics** project addresses these challenges by providing:
+
+- 📊 Real-time tracking of all PYUSD token transactions on the Ethereum blockchain.  
+- 🧠 Analytics and metrics on transaction count, volumes, active wallets, average transaction values, and gas fees.  
+- 👀 Insight into top wallets interacting with PYUSD — helping researchers identify whales or high-frequency users.  
+- 🧾 Historical analysis that can help in identifying trends or sudden spikes in usage.  
+- 🔐 A secure, read-only interface using **Google Cloud’s BigQuery Ethereum dataset** for trusted and scalable blockchain analytics.
+
+---
+
+## 🔧 How It Works
+
+### 🔌 Data Source
+
+The project uses **Google Cloud’s BigQuery Public Datasets**, specifically:
+
+- `bigquery-public-data.crypto_ethereum`
+
+This dataset provides complete Ethereum blockchain data, including transactions, contract logs, and token transfers. It enables querying PYUSD transaction activity directly using SQL without needing to run a node or rely on third-party RPC APIs.
+
+#### 🔑 Authentication
+Access to BigQuery is securely managed using a **Google Cloud Service Account JSON key**.
+
+To authenticate:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account-key.json"
+```
 
 ## 📦 Installation
 
@@ -117,6 +158,7 @@ The `pyusd.csv` file contains historical Ethereum transactions for the **PYUSD t
 
    ```bash
    echo "service-account.json" >> .gitignore
+
 
 ## 👤 Author
 
